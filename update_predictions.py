@@ -67,7 +67,7 @@ model.train()
 
 optimizer = Adam(model.parameters(), lr=1e-4)
 
-epochs = 5000
+epochs = 10000
 for epoch in range(epochs):
     optimizer.zero_grad()
 
