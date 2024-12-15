@@ -1,9 +1,12 @@
 name: Update Predictions
 
 on:
-  push:
-    branches:
-      - main
+  # Allow manual triggering
+  workflow_dispatch:
+
+  # Schedule the workflow to run daily at a specific time (e.g., 12:00 UTC)
+  schedule:
+    - cron: "0 12 * * *"  # Adjust time as needed (UTC)
 
 jobs:
   update-predictions:
@@ -22,7 +25,7 @@ jobs:
       run: pip install -r requirements.txt
 
     - name: Run the script
-      run: python run.py
+      run: python update_predictions.py
 
     - name: Commit and push changes
       run: |
