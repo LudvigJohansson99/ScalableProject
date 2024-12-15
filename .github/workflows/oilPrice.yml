@@ -1,8 +1,12 @@
 name: Update Oil Prices
 
 on:
+  # Allow manual triggering
+  workflow_dispatch:
+
+  # Schedule the workflow to run daily at a specific time (e.g., 12:00 UTC)
   schedule:
-    - cron: '0 0 * * *'  # Runs daily at 12:00 UTC (adjust as needed)
+    - cron: "0 12 * * *"  # Adjust time as needed (UTC)
 
 jobs:
   update-oil-prices:
