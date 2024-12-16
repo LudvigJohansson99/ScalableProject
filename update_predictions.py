@@ -7,7 +7,7 @@ import json
 import os
 
 
-API_key = "H2KSZCLZNY6TP1MZ"
+API_key = "BH6RFKC1GD7UUAAU"
 data = pd.read_json("oil_prices.json")
 dates = data.index.tolist()
 #print(dates[:5])  # Print the first 5 dates
