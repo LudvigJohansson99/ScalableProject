@@ -20,7 +20,7 @@ def fetch_data(api_key):
     return df
 #H2KSZCLZNY6TP1MZ Is alphavantage API-key
 #H2KSZCLZNY6TP1MZ
-API_key = "H2KSZCLZNY6TP1MZ"
+API_key = "BH6RFKC1GD7UUAAU"
 results = fetch_data(API_key)
 results = results.ffill()
 #print(results[:5])
