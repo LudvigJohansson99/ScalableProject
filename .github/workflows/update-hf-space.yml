@@ -22,7 +22,7 @@ jobs:
       env:
         HF_TOKEN: ${{ secrets.TOKEN }}
       run: |
-        git clone https://huggingface.co/spaces/username/space-name huggingface_repo
+        git clone https://huggingface.co/spaces/Stixludde/Project huggingface_repo
         cp oil_prices.json huggingface_repo/
         cp all_time_predictions.json huggingface_repo/
         cd huggingface_repo
