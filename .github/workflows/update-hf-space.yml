@@ -30,4 +30,4 @@ jobs:
         git config user.name "GitHub Actions"
         git add oil_prices.json all_time_predictions.json
         git commit -m "Update files"
-        git push
+        git push https://user:${{ secrets.TOKEN }}@huggingface.co/spaces/Stixludde/Project
