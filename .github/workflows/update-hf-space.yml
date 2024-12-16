@@ -1,0 +1,36 @@
+name: Update Hugging Face Space
+
+on:
+  schedule:
+    - cron: "0 12 * * *"  # Runs daily at 12:00 UTC (adjust as needed)
+  workflow_dispatch:  # Allows manual triggering
+
+jobs:
+  update-space:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3  # Checkout the GitHub repo
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.10"
+
+    - name: Install dependencies
+      run: pip install pandas
+
+    - name: Clone Hugging Face Space
+      env:
+        HF_TOKEN: ${{ secrets.TOKEN }}
+      run: |
+        git clone https://huggingface.co/spaces/username/space-name huggingface_repo
+        cp oil_prices.json huggingface_repo/
+        cp all_time_predictions.json huggingface_repo/
+        cd huggingface_repo
+        git config user.email "actions@github.com"
+        git config user.name "GitHub Actions"
+        git add oil_prices.json all_time_predictions.json
+        git commit -m "Update files"
+        git push
