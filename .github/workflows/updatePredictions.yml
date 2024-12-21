@@ -28,13 +28,13 @@ jobs:
         pip install pandas
         pip install requests
 
-    - name: Run the script
-      run: python update_predictions.py
-
-    - name: Commit and push changes
+    - name: Pull, Commit, and Push Predictions
       run: |
         git config --local user.email "actions@github.com"
         git config --local user.name "GitHub Actions"
+        git fetch origin
+        git pull origin main --rebase  # Pull latest changes and rebase
+        python update_predictions.py  # Update predictions
         git add all_time_predictions.json
         git commit -m "Update predictions"
-        git push
+        git push origin main
