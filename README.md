@@ -17,7 +17,7 @@ This project focuses on developing a predictive model for daily crude oil prices
 
 The primary data source is the Alpha Vantage WTI API, providing daily crude oil price data. The data is derived from the U.S. Energy Information Administration and accessed via the Federal Reserve Bank of St. Louis (FRED). 
 
-Sample data (last 7 days from `all_time_predictions.json`):
+Sample data :
 ```
 "2024-12-10": 71.27,
 "2024-12-11": 70.30,
