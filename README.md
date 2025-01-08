@@ -55,12 +55,12 @@ Sample data :
 
 ### Model Predictions
 A sample of future predictions:
-- **2024-12-17**: 2395.20
-- **2024-12-18**: 610.23
-- **2024-12-19**: 4082.97
+- **2024-12-17**: 68.62
+- **2024-12-18**: 70.80
+- **2024-12-19**: 70.10
 
 ### Observations
-The model exhibits occasional extreme outliers, suggesting further fine-tuning or adjustments in preprocessing are necessary.
+The model seems to predict a lower price than what the true price ends up at more often than higher
 
 ### Visualization
 The Gradio-based UI in Hugging Face Spaces provides a comprehensive view of historical trends and forecasted data.
