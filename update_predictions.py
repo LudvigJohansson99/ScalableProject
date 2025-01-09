@@ -6,19 +6,24 @@ import pandas as pd
 import json
 import os
 
-
+# API Key for accessing the external data source
 API_key = "BH6RFKC1GD7UUAAU"
+
+# Load the oil prices dataset from the JSON file containing the historical data
 data = pd.read_json("oil_prices.json")
+
+# Extract date-related features for time series processing
 dates = data.index.tolist()
 #print(dates[:5])  # Print the first 5 dates
 day = data['day'] = data.index.day
 month = data['month'] = data.index.month  # 1 (January) to 12 (December)
 year = data['year'] = data.index.year  # E.g., 1986
 
-# Extract past and future time features
-context_length = 40
-prediction_length = 7
-lags_sequence = [1, 2, 3, 4, 5, 6, 7]
+context_length = 40  # Number of past time steps to consider
+prediction_length = 7  # Number of future steps to predict
+lags_sequence = [1, 2, 3, 4, 5, 6, 7]  # Lags for feature creation
+
+# Ensure the target variable is numeric and handle missing values
 data['value'] = pd.to_numeric(data['value'], errors='coerce')
 data['value'].fillna(method='ffill', inplace=True)
 
@@ -27,14 +32,15 @@ config = TimeSeriesTransformerConfig(
     context_length=context_length,
     input_size=1,
     lags_sequence=lags_sequence,
-    num_time_features=3,  # day, month, year
-    scaling="mean",
-    encoder_layers=6,
-    decoder_layers=6,
-    encoder_ffn_dim=128,
-    decoder_ffn_dim=128,
+    num_time_features=3,  # Using day, month, year as additional time features
+    scaling="mean",  # Normalize data by mean
+    encoder_layers=6,  # Number of encoder layers
+    decoder_layers=6,  # Number of decoder layers
+    encoder_ffn_dim=128,  # Encoder feed-forward network size
+    decoder_ffn_dim=128,  # Decoder feed-forward network size
 )
 
+# Extract past values for the context window
 past_values = torch.tensor(
     data['value'].iloc[-(context_length + max(lags_sequence)):].values,
     dtype=torch.float32
@@ -57,7 +63,7 @@ future_time_features = torch.tensor(
     dtype=torch.float32
 ).unsqueeze(0)
 
-# Observed mask (all observed in this case)
+# Observed mask
 past_observed_mask = torch.ones_like(past_values, dtype=torch.bool)
 
 
@@ -84,6 +90,8 @@ for epoch in range(epochs):
     loss.backward()
     optimizer.step()
     #print(f"Epoch {epoch + 1}/{epochs}, Loss: {loss.item()}")
+
+#Extract the data used for making predictions
 total_length = len(data['value'])
 start_idx = total_length - (context_length + prediction_length + max(lags_sequence))
 end_idx = total_length - prediction_length
